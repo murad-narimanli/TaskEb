@@ -1,4 +1,4 @@
-import admin from "../api";
+import {admin} from "../const/api"
 
 export function getRequest(url, query) {
     return admin.get(url, { params: {...query , } });
