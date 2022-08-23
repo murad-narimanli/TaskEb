@@ -1,8 +1,7 @@
 export const routes =  {
   profile:{
-    login:'login',
-    user:'user',
-    register:'register'
+    users:'users',
   },
   tasks:'tasks',
+  projects:'projects'
 }

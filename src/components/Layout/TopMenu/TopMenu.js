@@ -35,10 +35,12 @@ const TopMenu = (props) => {
           </Col>
         </Row>
         <div className="w-100  flex flex-between">
-          <Button>
-            <SettingOutlined />
-            <span>{t("settings")}</span>
-          </Button>
+          <Link to={'/user-settings'}>
+            <Button>
+              <SettingOutlined />
+              <span>{t("settings")}</span>
+            </Button>
+          </Link>
           <Button onClick={logOut}>
             <LogoutOutlined />
             <span>{t("logOut")}</span>
@@ -62,7 +64,7 @@ const TopMenu = (props) => {
           </Link>
         ) : null}
         <div className="top-menu-navigation">
-          <Tooltip placement="bottomRight" title={props.user.first_name}>
+          <Tooltip placement="bottomRight" title={props.user.username}>
             <Popover
               className="ml-20"
               placement="bottomRight"

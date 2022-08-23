@@ -1,33 +1,15 @@
 {
   "users": [
     {
-      "id": 601271987527,
-      "companyName": "Murad Company",
+      "id": 985883170788,
+      "companyName": "Murads MMC",
       "address": "Baku Azerbaijan Badamdar av 3 h33",
-      "username": "muradn",
+      "username": "Muradn",
       "phone": 556230599,
+      "companyId": 985883170788,
       "email": "m.nerimanli@gmail.com",
       "password": "Murad2020!",
       "isCompany": true,
-      "companyId": 601271987527,
-      "role": {
-        "admin": true,
-        "editTask": true,
-        "addTask": true,
-        "deleteTask": true,
-        "changeStatus": true
-      }
-    },
-    {
-      "id": 362034532884,
-      "companyName": "test",
-      "address": "test",
-      "username": "test",
-      "phone": 30202023032,
-      "email": "test@test.ru",
-      "password": "Murad2020!",
-      "isCompany": true,
-      "companyId": 362034532884,
       "role": {
         "admin": true,
         "editTask": true,
@@ -66,5 +48,6 @@
       "status": "inFinished",
       "expireDate": "2023-01-01T00:00:00000029"
     }
-  ]
+  ],
+  "projects": []
 }

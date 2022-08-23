@@ -1,8 +1,8 @@
 import * as types from '../types'
 import admin from "./../../const/api";
 import history from "./../../const/history";
-import axios from "axios"
 import {routes} from "../../services/api-routes"
+let url =  routes.profile.users
 
 export const getUserData = (data) => async (dispatch) => {
   dispatch({ type: types.LOADING_ON });
@@ -17,7 +17,7 @@ export const getUserData = (data) => async (dispatch) => {
       }
       else{
         console.log('test')
-       await admin.get(`users/${token}`).then((res) => {
+       await admin.get(`${url}/${token}`).then((res) => {
             dispatch({
               type: types.SET_USER_LOGGED_IN,
               payload: {...res.data},
@@ -50,7 +50,7 @@ export const logInUser = (email, password) => async (dispatch) => {
   } else {
     dispatch({ type: types.LOADING_ON });
     await admin
-      .get(`users`, {
+      .get(url, {
         params: {
           email,
           password
@@ -77,7 +77,7 @@ export const logInUser = (email, password) => async (dispatch) => {
 
 
 export const registerUser  = (data) => async (dispatch) => {
-  await admin.get('users').then((users) => {
+  await admin.get(url).then((users) => {
     let allUsers = users.data
     let isBad = allUsers.some((user) => {
         if (user.username.toLowerCase() === data.username.toLowerCase()) {
@@ -110,7 +110,7 @@ export const registerUser  = (data) => async (dispatch) => {
     })
 
     if (!isBad) {
-      admin.post('users', data).then(r => {
+      admin.post(url, data).then(r => {
         localStorage.setItem("access_token", data.id);
         dispatch(getUserData(data.id))
       }).catch(()=>{
