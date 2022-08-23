@@ -18,6 +18,7 @@ import {
 import { withTranslation } from "react-i18next";
 import history from "../const/history";
 import Routing from "./Layout/Routing/Routing";
+import Register from "./Layout/Register/Register";
 const { Content, Sider } = Layout;
 
 class App extends React.Component {
@@ -55,8 +56,11 @@ class App extends React.Component {
   };
 
   componentDidMount() {
-    localStorage.setItem("locale", "az");
-    this.props.getUserData();
+    localStorage.setItem("locale", "en");
+   let token = localStorage.getItem('access_token')
+    if(token) {
+      this.props.getUserData();
+    }
     this.setState({ web: window.innerWidth > 1200 });
     window.addEventListener("resize", () => {
       this.setState({
@@ -154,10 +158,11 @@ class App extends React.Component {
           <>
             <Switch>
               <Route exact path="/" component={Login} />
+              <Route exact path="/register" component={Register} />
               <Route path="/">
                 <div>
                   <p className="flex dir-column all-center h-100vh">
-                    Tapılmadı <Link to={"/"}>Ana səhifə</Link>
+                    Not Found <Link to={"/"}>Home</Link>
                   </p>
                 </div>
               </Route>

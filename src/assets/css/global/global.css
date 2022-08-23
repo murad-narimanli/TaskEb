@@ -395,23 +395,23 @@ m-10 {
 }
 
 .border {
-  border: 1px solid #0000001f !important;
+  border: 1px solid rgba(0, 0, 0, 0.1215686275) !important;
 }
 
 .border-right {
-  border-right: 1px solid #0000001f !important;
+  border-right: 1px solid rgba(0, 0, 0, 0.1215686275) !important;
 }
 
 .border-left {
-  border-left: 1px solid #0000001f !important;
+  border-left: 1px solid rgba(0, 0, 0, 0.1215686275) !important;
 }
 
 .border-bottom {
-  border-bottom: 1px solid #0000001f !important;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1215686275) !important;
 }
 
 .border-top {
-  border-top: 1px solid #0000001f !important;
+  border-top: 1px solid rgba(0, 0, 0, 0.1215686275) !important;
 }
 
 .border-none {
@@ -665,7 +665,7 @@ m-10 {
 
 @media (max-width: 400px) {
   .profil-info {
-    min-width: 250px;
+    min-width: 350px;
   }
 
   .top-menu {
@@ -733,7 +733,7 @@ m-10 {
   .ant-table-wrapper .ant-table-thead > tr th,
 .ant-table-wrapper .ant-table-thead > tr td, .ant-table-wrapper .ant-table-tbody > tr th,
 .ant-table-wrapper .ant-table-tbody > tr td {
-    border-bottom: 1px solid #0000001f !important;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1215686275) !important;
     padding: 10px 15px !important;
     font-size: 15px !important;
     display: flex !important;

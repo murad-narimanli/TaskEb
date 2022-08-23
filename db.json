@@ -1,8 +1,70 @@
 {
   "users": [
-
+    {
+      "id": 601271987527,
+      "companyName": "Murad Company",
+      "address": "Baku Azerbaijan Badamdar av 3 h33",
+      "username": "muradn",
+      "phone": 556230599,
+      "email": "m.nerimanli@gmail.com",
+      "password": "Murad2020!",
+      "isCompany": true,
+      "companyId": 601271987527,
+      "role": {
+        "admin": true,
+        "editTask": true,
+        "addTask": true,
+        "deleteTask": true,
+        "changeStatus": true
+      }
+    },
+    {
+      "id": 362034532884,
+      "companyName": "test",
+      "address": "test",
+      "username": "test",
+      "phone": 30202023032,
+      "email": "test@test.ru",
+      "password": "Murad2020!",
+      "isCompany": true,
+      "companyId": 362034532884,
+      "role": {
+        "admin": true,
+        "editTask": true,
+        "addTask": true,
+        "deleteTask": true,
+        "changeStatus": true
+      }
+    }
   ],
   "tasks": [
-
+    {
+      "id": "1",
+      "title": "Admin",
+      "description": "Administrator",
+      "status": "inList",
+      "expireDate": "2015-01-01T00:00:00000029"
+    },
+    {
+      "id": "2",
+      "title": "Admin",
+      "description": "Administrator",
+      "status": "inProgress",
+      "expireDate": "2015-01-01T00:00:00000029"
+    },
+    {
+      "id": "3",
+      "title": "Admin",
+      "description": "Administrator",
+      "status": "inTest",
+      "expireDate": "2022-01-01T00:00:00000029"
+    },
+    {
+      "id": "4",
+      "title": "Admin",
+      "description": "Administrator",
+      "status": "inFinished",
+      "expireDate": "2023-01-01T00:00:00000029"
+    }
   ]
 }

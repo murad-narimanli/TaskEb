@@ -47,26 +47,3 @@
 }
 
 
-.float-label {
-  position: relative;
-  margin-bottom: 12px;
-}
-
-.label {
-  font-size: 12px;
-  font-weight: normal;
-  position: absolute;
-  pointer-events: none;
-  left: 12px;
-  top: 22px;
-  transition: 0.2s ease all;
-  z-index: 10 !important;
-}
-
-.label-float {
-  top: -8px;
-  left: 0px;
-  font-weight: bold;
-  font-size: 10px;
-  padding: 1px 2px;
-}

@@ -12,9 +12,6 @@
   margin: 15px 0 5px 0;
   outline: 0;
 }
-.admin-login-box .admin-login-row input:focus {
-  box-shadow: 0 0 2px 0 rgb(50, 120, 103);
-}
 
 .example {
   margin: 12px;
@@ -38,30 +35,6 @@
 .ant-select-single:not(.ant-select-customize-input) .ant-select-selector {
   padding: 16px 10px 4px 11px;
   height: 48px;
-}
-
-.float-label {
-  position: relative;
-  margin-bottom: 12px;
-}
-
-.label {
-  font-size: 12px;
-  font-weight: normal;
-  position: absolute;
-  pointer-events: none;
-  left: 12px;
-  top: 22px;
-  transition: 0.2s ease all;
-  z-index: 10 !important;
-}
-
-.label-float {
-  top: -8px;
-  left: 0px;
-  font-weight: bold;
-  font-size: 10px;
-  padding: 1px 2px;
 }
 
 /*# sourceMappingURL=login.css.map */

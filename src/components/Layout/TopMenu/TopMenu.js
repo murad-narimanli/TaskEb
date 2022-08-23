@@ -2,7 +2,7 @@ import React from "react";
 import {
   LogoutOutlined,
   MenuUnfoldOutlined,
-  MenuFoldOutlined,
+  MenuFoldOutlined, SettingOutlined,
 } from "@ant-design/icons";
 import logo from "./../../../assets/img/logon.png";
 import { Button, Popover, Tooltip, Avatar, Row, Col } from "antd";
@@ -25,18 +25,23 @@ const TopMenu = (props) => {
       <div className="profil-info">
         <Row className="border-bottom flex-align-center pt-1 pb-1 mb-10">
           <Col xs={4}>
-            <Avatar size={38} src={props.user.avatar} />
+            <Avatar style={{ backgroundColor: 'rgba(118,188,33,0.81)' }} size={38} >{props.user.username[0].toUpperCase()}</Avatar>
           </Col>
           <Col className="border-right" xs={20}>
             <div className="flex dir-column w-100 h-100 justify-center pr-1">
-              <h3>{props.user.first_name + ' ' + props.user.last_name }</h3>
+              <h3>{props.user.companyName + ' - ' + props.user.username }</h3>
               <p>{props.user.email}</p>
             </div>
           </Col>
         </Row>
-        <div className="w-100  flex flex-end">
+        <div className="w-100  flex flex-between">
+          <Button>
+            <SettingOutlined />
+            <span>{t("settings")}</span>
+          </Button>
           <Button onClick={logOut}>
-            <span>{t("logOut")}</span> <LogoutOutlined />
+            <LogoutOutlined />
+            <span>{t("logOut")}</span>
           </Button>
         </div>
       </div>
@@ -64,7 +69,7 @@ const TopMenu = (props) => {
               content={content()}
               trigger="click"
             >
-              <Avatar src={props?.user?.avatar} size={35} />
+              <Avatar style={{ backgroundColor: 'rgba(118,188,33,0.81)' }} gap={'A'} size={35} >{props.user.username[0].toUpperCase()}</Avatar>
             </Popover>
           </Tooltip>
         </div>
