@@ -11,6 +11,7 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import history from "../../../const/history";
 import { useTranslation } from "react-i18next";
+import Permission from "../../Elements/Permission";
 
 const TopMenu = (props) => {
   const { t } = useTranslation();
@@ -30,7 +31,8 @@ const TopMenu = (props) => {
           <Col className="border-right" xs={20}>
             <div className="flex dir-column w-100 h-100 justify-center pr-1">
               <h3>{props.user.companyName + ' - ' + props.user.username }</h3>
-              <p>{props.user.email}</p>
+              <p>Email: {props.user.email}</p>
+              <p>Role: {props.user.role.admin ? 'Admin' : 'User'}</p>
             </div>
           </Col>
         </Row>
@@ -66,11 +68,25 @@ const TopMenu = (props) => {
         <div className="top-menu-navigation">
           <Tooltip placement="bottomRight" title={props.user.username}>
             <Popover
-              className="ml-20"
+              className="ml-20 flex flex-align-center"
               placement="bottomRight"
               content={content()}
               trigger="click"
             >
+              <div className={'mr-20 text-left'}>
+                <Permission type={'admin'} isOk={false}>
+                  <div>
+                    {props.user.name} {props.user.surname}
+                  </div>
+                </Permission>
+
+                <Permission type={'admin'}>
+                  <div>
+                    {props.user.companyName}
+                  </div>
+                </Permission>
+
+              </div>
               <Avatar style={{ backgroundColor: 'rgba(118,188,33,0.81)' }} gap={'A'} size={35} >{props.user.username[0].toUpperCase()}</Avatar>
             </Popover>
           </Tooltip>

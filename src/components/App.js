@@ -87,7 +87,7 @@ class App extends React.Component {
       let desc = !curr.isHappy
         ? curr.description?.status === 400
           ? curr.description.data.error
-          : this.props.t("errorMessage")
+          : curr.description
         : curr.description;
       notification.info({
         message: curr.isHappy

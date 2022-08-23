@@ -7,6 +7,7 @@ import UserSettings from "../../Pages/UserSettings";
 import Projects from "../../Pages/Projects";
 import Tasks from "../../Pages/Tasks";
 import Permission from "../../Elements/Permission";
+import BackLog from "../../Pages/BackLog";
 
 
 function Routing(props) {

@@ -26,6 +26,7 @@ const Register = (props) => {
             id,
             ...values,
             isCompany:true,
+            firstLogin:false,
             companyId:id,
             role: {
                 admin: true,

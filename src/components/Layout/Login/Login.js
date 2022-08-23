@@ -21,7 +21,7 @@ const Login = (props) => {
 
 
     const onFinish = (values) => {
-        props.logInUser(values.username, values.password , values.remember);
+        props.logInUser(values.email, values.password);
     };
 
     const onFinishFailed = (errorInfo) => {
@@ -58,8 +58,8 @@ const Login = (props) => {
                 autoComplete="off"
             >
               <Form.Item
-                  label="Username"
-                  name="username"
+                  label="Email"
+                  name="email"
                   rules={[
                     {
                       required: true,

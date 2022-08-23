@@ -1,15 +1,16 @@
 {
   "users": [
     {
-      "id": 985883170788,
+      "id": 142807544998,
       "companyName": "Murads MMC",
       "address": "Baku Azerbaijan Badamdar av 3 h33",
-      "username": "Muradn",
+      "username": "muradn",
       "phone": 556230599,
-      "companyId": 985883170788,
       "email": "m.nerimanli@gmail.com",
       "password": "Murad2020!",
       "isCompany": true,
+      "firstLogin": false,
+      "companyId": 142807544998,
       "role": {
         "admin": true,
         "editTask": true,
@@ -17,6 +18,43 @@
         "deleteTask": true,
         "changeStatus": true
       }
+    },
+    {
+      "name": "test",
+      "surname": "test",
+      "username": "test",
+      "phone": 556230598,
+      "email": "test@gmail.com",
+      "password": "test2024",
+      "role": {
+        "editTask": true,
+        "addTask": true,
+        "deleteTask": true,
+        "changeStatus": true,
+        "admin": false
+      },
+      "isCompany": false,
+      "companyId": 142807544998,
+      "companyName": "Murads MMC",
+      "id": 470271641289,
+      "firstLogin": true
+    },
+    {
+      "name": "Murad Narimanli",
+      "surname": "mas",
+      "username": "asda",
+      "phone": 1232,
+      "email": "m.nerimanli@gmail.coms",
+      "password": "MuradNarimanli2022",
+      "role": {
+        "addTask": true,
+        "changeStatus": true,
+        "admin": false
+      },
+      "isCompany": false,
+      "companyId": 142807544998,
+      "companyName": "Murads MMC",
+      "id": 1621147898418
     }
   ],
   "tasks": [

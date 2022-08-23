@@ -1,10 +1,16 @@
 import { connect } from "react-redux";
 import React from 'react';
 
-const Permission = ({ perms, type  , children }) => {
+const Permission = ({ perms, type   , isOk= true , children }) => {
     // "admin": ,"editTask": , "addTask": ,"deleteTask": ,"changeStatus":
     let showed = perms[type]
-    return showed ? <>{children}</> : null;
+    if (isOk){
+        return showed ? <>{children}</> : null;
+    }
+    else{
+        return !showed ? <>{children}</> : null;
+    }
+
 };
 const mapStateToProps = ({ user }) => {
     return { perms: user.data.role };
