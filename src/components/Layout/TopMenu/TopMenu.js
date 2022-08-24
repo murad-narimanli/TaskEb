@@ -26,7 +26,7 @@ const TopMenu = (props) => {
       <div className="profil-info">
         <Row className="border-bottom flex-align-center pt-1 pb-1 mb-10">
           <Col xs={4}>
-            <Avatar style={{ backgroundColor: 'rgba(118,188,33,0.81)' }} size={38} >{props.user.username[0].toUpperCase()}</Avatar>
+            <Avatar style={{ backgroundColor:  '#5fb656' }} size={38} >{props.user.username[0].toUpperCase()}</Avatar>
           </Col>
           <Col className="border-right" xs={20}>
             <div className="flex dir-column w-100 h-100 justify-center pr-1">
@@ -87,7 +87,7 @@ const TopMenu = (props) => {
                 </Permission>
 
               </div>
-              <Avatar style={{ backgroundColor: 'rgba(118,188,33,0.81)' }} gap={'A'} size={35} >{props.user.username[0].toUpperCase()}</Avatar>
+              <Avatar style={{ backgroundColor: '#5fb656' }}  size={35} >{props.user.username[0].toUpperCase()}</Avatar>
             </Popover>
           </Tooltip>
         </div>

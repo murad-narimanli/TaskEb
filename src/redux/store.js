@@ -3,7 +3,7 @@ import thunk from "redux-thunk";
 import {
   userReducer,
   loaderReducer,
-  notificationReducer, tasksReducer, usersReducer, modalReducer,
+  notificationReducer, tasksReducer, modalReducer,
 } from "./reducers";
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
@@ -13,7 +13,6 @@ const rootReducer = combineReducers({
   loader: loaderReducer,
   notification: notificationReducer,
   tasks:tasksReducer,
-  users: usersReducer,
   modalData: modalReducer,
 });
 

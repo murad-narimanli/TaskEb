@@ -1,9 +1,7 @@
+import React from "react";
 import { Draggable } from "react-beautiful-dnd";
-import { LoremIpsum } from "lorem-ipsum";
-// import { generateFromString } from "generate-avatar";
-import React, { useMemo } from "react";
 import styled, { css } from "styled-components";
-import {Button, Popconfirm , Tooltip} from "antd";
+import {Avatar, Button, Divider, Popconfirm, Tooltip} from "antd";
 import {DeleteFilled, EditFilled} from "@ant-design/icons";
 import {useTranslation} from "react-i18next";
 import Permission from "../../Elements/Permission";
@@ -36,12 +34,16 @@ const DragItem = styled.div`
   margin: 0 0 8px 0;
   display: grid;
   grid-gap: 20px;
+  word-break: break-all;
+  flex-wrap: wrap;
+  white-space: pre-line;
   flex-direction: column;
 `;
 
 
-const ListItem = ({ item, index , setVisibleAddModal , notify , getTasks }) => {
+const ListItem = ({ item, index , setVisibleAddModal , notify , getTasks , users  , user}) => {
     const { t } = useTranslation();
+
 
     const deleteTask = (id) => {
         admin.delete(`tasks/${id}`).then(() => {
@@ -50,9 +52,13 @@ const ListItem = ({ item, index , setVisibleAddModal , notify , getTasks }) => {
         })
     }
 
+    const editTask = (item) => {
+        setVisibleAddModal(true , item.id , item)
+    }
+
 
     return (
-        <Draggable draggableId={item.ids} index={index}>
+        <Draggable className={'test'} draggableId={item.ids} index={index}>
             {(provided, snapshot) => {
                 return (
                     <DragItem
@@ -61,29 +67,29 @@ const ListItem = ({ item, index , setVisibleAddModal , notify , getTasks }) => {
                         {...provided.draggableProps}
                         {...provided.dragHandleProps}
                     >
-                        <CardHeader>{item.title}</CardHeader>
-                        <span>{item.description}</span>
-                        <span>DeadLine {moment(item.expireDate).format('DD.MM.YYYY')}</span>
+                        <CardHeader> <div><b>Title</b></div> {item.title}</CardHeader>
+                        <span><div><b>Description</b></div>  {item.description}</span>
+                        <span> <b className={'mr-10'}>DeadLine</b> {moment(item.expireDate).format('DD.MM.YYYY')}</span>
                         <CardFooter>
-                            <span>Task id - {item.id}</span>
+                            <span><b>Task id</b> - {item.id}</span>
                             <Author>
                                 <div className="flex flex-end">
                                     <Permission type={'editTask'}>
                                         <Tooltip className="ml-5" title={t("edit")} placement="topRight">
-                                            <Button onClick={() =>{setVisibleAddModal(true , item.id , item)}}  className="border-none" type="text" shape="circle">
+                                            <Button onClick={() =>{ editTask(item)  }}  className="border-none" type="text" shape="circle">
                                                 <EditFilled />
                                             </Button>
                                         </Tooltip>
                                     </Permission>
                                     <Permission type={'deleteTask'}>
                                         <Popconfirm
-                                            placement="right"
+                                            placement="bottomRight"
                                             title={t("areYouSure")}
                                             onConfirm={() => deleteTask(item.id)}
                                             okText={'Yes'}
                                             cancelText={'No'}
                                         >
-                                            <Tooltip className="ml-5" title={'Delete'}>
+                                            <Tooltip  className="ml-5" title={'Delete'}>
                                                 <Button className="border-none" type="text" shape="circle">
                                                     <DeleteFilled />
                                                 </Button>
@@ -91,11 +97,37 @@ const ListItem = ({ item, index , setVisibleAddModal , notify , getTasks }) => {
                                         </Popconfirm>
                                     </Permission>
                                 </div>
-                                {/*<Avatar*/}
-                                {/*    src={`data:image/svg+xml;utf8,${generateFromString(item.id)}`}*/}
-                                {/*/>*/}
-                            </Author>
+                             </Author>
                         </CardFooter>
+
+                        <div className="flex flex-align-center flex-between">
+                            <div>
+                                <b>Assigned users</b>
+                            </div>
+                            <Avatar.Group>
+                                {users.map((us, i) =>{
+                                    if (item.assignedTo.includes(us.id)){
+                                        return (
+                                            <Tooltip
+                                                key={i}
+                                                title={us.isCompany ? us.username + ' / ' + us.companyName : us.username + ' / ' + us.name + ' '+ us.surname}
+                                                placement="bottom"
+                                            >
+                                                <Avatar
+                                                    style={{
+                                                        backgroundColor:`${item?.color}`,
+                                                    }}
+                                                >
+                                                    {us.username[0].toUpperCase()}
+                                                </Avatar>
+                                            </Tooltip>
+
+                                        )
+                                    }
+                                })}
+                            </Avatar.Group>
+                        </div>
+
                     </DragItem>
                 );
             }}
@@ -105,9 +137,10 @@ const ListItem = ({ item, index , setVisibleAddModal , notify , getTasks }) => {
 
 
 
-const mapStateToProps = ({ modalData }) => {
+const mapStateToProps = ({ modalData , user }) => {
     return {
-        modalData
+        modalData,
+        user:user.data
     };
 };
 

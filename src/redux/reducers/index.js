@@ -1,5 +1,4 @@
 import * as types from '../types'
-import {GET_USERS} from "../types";
 
 const initialUser = {
   isLoggedIn: false,
@@ -19,10 +18,6 @@ const taskState = {
   data:[]
 }
 
-const userState = {
-  loading: false,
-  data:[]
-}
 
 
 export function modalReducer(modal= modalData, action) {
@@ -36,25 +31,6 @@ export function modalReducer(modal= modalData, action) {
   }
 }
 
-
-export function usersReducer (users= userState, action) {
-  switch (action.type){
-    case types.GET_USERS_LOADING:
-      return {
-        loading: true,
-        data:[]
-      };
-    case types.GET_USERS:
-      console.log('get is ok')
-      return {
-        loading: false,
-        data:action.payload
-      };
-    default:
-      console.log('bad')
-      return userState;
-  }
-}
 
 
 export function tasksReducer (tasks= taskState, action) {

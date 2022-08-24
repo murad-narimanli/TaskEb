@@ -1,16 +1,14 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import {
     Card,
     Table,
     Button,
-    Spin,
     Form,
-    Select,
     Row,
     Col,
     Tooltip,
     Input,
-    Popconfirm, InputNumber, Switch,
+    Popconfirm, Switch,
 } from "antd";
 import {
     UnorderedListOutlined,
@@ -22,10 +20,8 @@ import { notify } from "../../../redux/actions";
 import { connect } from "react-redux";
 import admin from "../../../const/api";
 import { useTranslation } from "react-i18next";
-import {noWhitespace, whiteSpace} from "../../../utils/rules";
+import {whiteSpace} from "../../../utils/rules";
 import {routes} from "../../../services/api-routes";
-import * as HttpService from "../../../services/http-service";
-import * as types from "../../../redux/types";
 
 const Users = (props) => {
     const mainUrl = routes.profile.users
@@ -84,7 +80,7 @@ const Users = (props) => {
                 return (
                     <div className="flex flex-end">
                         <Popconfirm
-                            placement="right"
+                            placement="bottomRight"
                             title={t("areYouSure")}
                             onConfirm={() => deletePosition(i)}
                             okText={t("yes")}
@@ -122,17 +118,14 @@ const Users = (props) => {
     const IsBad = (array, data) => {
         return array.some((user) => {
             if (user.username.toLowerCase() === data.username.toLowerCase()) {
-                console.log("Username is already registered")
                 notify('Username is already registered!' , false)
                 return true;
             }
             if (user.email.toLowerCase() === data.email.toLowerCase()) {
-                console.log("Email is already registered")
                 notify('Email is already registered' , false)
                 return true;
             }
             if (String(user.phone).slice(-4) === String(data.phone).slice(-4)) {
-                console.log("Phone is already registered")
                 notify('Phone is already registered' , false)
                 return true;
             }

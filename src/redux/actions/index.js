@@ -130,31 +130,6 @@ export const toggleLoading = (payload) => ({
 
 
 
-export const getUsers = (params) => async (dispatch) => {
-  // dispatch({
-  //   type: types.GET_USERS_LOADING,
-  // });
-  await admin
-      .get(`users` , {params})
-      .then((res) => {
-          console.log(res.data)
-        dispatch({
-          type: types.GET_USERS,
-          payload: res.data
-        });
-      })
-      .catch(() => {
-        dispatch({
-          type: types.GET_USERS,
-          payload: {
-            data: [],
-            loading:false
-          }
-        });
-      })
-};
-
-
 
 export const getTasks = (params) => async (dispatch) => {
   dispatch({

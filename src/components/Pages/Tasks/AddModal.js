@@ -3,10 +3,11 @@ import {Button, Col, DatePicker, Form, Input, InputNumber, Row, Select} from "an
 import {noWhitespace, whiteSpace} from "../../../utils/rules";
 import {useTranslation} from "react-i18next";
 import {connect} from "react-redux";
-import {notify, setVisibleAddModal , getTasks , getUsers} from "../../../redux/actions";
+import {notify, setVisibleAddModal , getTasks} from "../../../redux/actions";
 import admin from "../../../const/api";
-import moment from "moment";
 import {routes} from "../../../services/api-routes";
+import moment from "moment";
+import TextArea from "antd/es/input/TextArea";
 const { Option } = Select;
 
 
@@ -14,17 +15,19 @@ const { Option } = Select;
 const AddModal = (props) => {
     const { t, i18n } = useTranslation();
     const [form] = Form.useForm();
-    const company = routes.tasks;
-    let mainUrl = routes.tasks
-    let { notify, setVisibleAddModal , modalData , users , getUsers} = props;
+    const [users, setUsers] = useState([]);
+    let mainUrl = routes.profile.users;
+    let { notify, setVisibleAddModal , modalData , getTasks} = props;
     let {editing, editingData } = modalData
 
     useEffect(() => {
-        getUsers({companyId:props.user.companyId});
+        getUsers()
+
         if (editing) {
             form.setFieldsValue(
                 {
                     ...editingData,
+                    expireDate:moment(editingData.expireDate)
                 }
             );
         }
@@ -34,11 +37,28 @@ const AddModal = (props) => {
     },[t , editing])
 
 
+    const getUsers = async () => {
+        await admin.get(mainUrl , {params: {companyId:props.user.companyId}}).then((res)=>{
+            setUsers(res.data);
+        }).catch((err) =>{
+            notify(err.response, false);
+        })
+    }
+
+
 
     const submitForm = (values) =>{
         if(!editing){
-            admin.post(mainUrl, values).then(()=>{
-                // setVisibleAddModal(false);
+            let id = parseInt(Number(Math.random()*Date.now()))
+            let objPost = {
+                id,
+                ...values,
+                status:'todo',
+                companyId:props.user.companyId,
+                createdBy:props.user.id,
+            }
+            admin.post('tasks', objPost).then(()=>{
+                setVisibleAddModal(false);
                 form.resetFields();
                 notify("", true);
                 getTasks()
@@ -47,13 +67,16 @@ const AddModal = (props) => {
             } )
         }
         else{
+            let objPut = {
+                ...editingData,
+                ...values,
+            }
             admin.put(
-                mainUrl+`/` + editing, {
-                    ...values,
-                    id:editing
+                'tasks'+`/` + editing, {
+                    ...objPut
                 }
             ).then(()=>{
-                // setVisibleAddModal(false);
+                setVisibleAddModal(false);
                 form.resetFields();
                 notify("", true);
                 getTasks()
@@ -92,7 +115,7 @@ const AddModal = (props) => {
                                 name={`description`}
                                 rules={[whiteSpace(t("inputError"))]}
                             >
-                                <Input size="large" />
+                                <TextArea rows={'6'} size="large" />
                             </Form.Item>
                         </Col>
 
@@ -120,7 +143,7 @@ const AddModal = (props) => {
                                     }
                                 >
                                     {
-                                        users.data?.map(user => (
+                                        users?.map(user => (
                                             <Option key={user.id} value={user.id}>
                                                 {user.isCompany ? user.companyName + ' / ' +user.username : user.name + ' '+ user.surname}
                                             </Option>
@@ -133,13 +156,18 @@ const AddModal = (props) => {
 
                         <Col lg={24} md={24}>
                             <Form.Item
-                                label={'Password'}
+                                label={'DeadLine'}
                                 className="mb-5"
                                 validateTrigger="onChange"
-                                name={`password`}
-                                rules={[whiteSpace(t("inputError"))]}
+                                name={`expireDate`}
+                                rules={[noWhitespace(t("inputError"))]}
                             >
-                                <Input type={'password'} size="large" />
+                                <DatePicker
+                                    disabledDate={(current) => {
+                                        let customDate = moment().format("YYYY-MM-DD");
+                                        return current && current < moment(customDate, "YYYY-MM-DD");
+                                    }}
+                                    className="w-100" size="large" />
                             </Form.Item>
                         </Col>
 
@@ -153,9 +181,9 @@ const AddModal = (props) => {
                         <Button type="primary"  htmlType="submit">
                             {t("save")}
                         </Button>
-                        {/*<Button className="ml-10" onClick={() =>{ props.setVisibleAddModal(false) ; form.resetFields()}}>*/}
-                        {/*    {t("cancel")}*/}
-                        {/*</Button>*/}
+                        <Button className="ml-10" onClick={() =>{ setVisibleAddModal(false) ; form.resetFields()}}>
+                            {t("cancel")}
+                        </Button>
                     </div>
                 </div>
             </Form>
@@ -165,15 +193,14 @@ const AddModal = (props) => {
 
 
 
-const mapStateToProps = ({ user , users , modalData }) => {
+const mapStateToProps = ({ user , modalData , tasks }) => {
     return {
         user: user.data,
         modalData,
-        users
     };
 };
 
 
-export default connect(mapStateToProps, { notify  , setVisibleAddModal , getUsers})(AddModal);
+export default connect(mapStateToProps, { notify  , setVisibleAddModal , getTasks })(AddModal);
 
 

@@ -9,27 +9,22 @@ import {
 import {
     UnorderedListOutlined,
 } from "@ant-design/icons";
-import {getUsers, notify, setVisibleAddModal} from "../../../redux/actions";
+import { notify, setVisibleAddModal} from "../../../redux/actions";
 import { connect } from "react-redux";
 import { useTranslation } from "react-i18next";
 import DragList from "./DragList";
 import Modal from "antd/es/modal/Modal";
 import AddModal from "./AddModal";
-import admin from "../../../const/api";
 import Permission from "../../Elements/Permission";
 
 const Tasks = (props) => {
     const { t } = useTranslation();
-    const { setVisibleAddModal , getUsers } = props
+    const { setVisibleAddModal } = props
 
     const showModal = () => {
       setVisibleAddModal(true , null, {})
     }
 
-    useEffect(() =>{
-        getUsers({companyId:props.user.companyId});
-        console.log(props.users)
-    } ,[props.users])
 
     return(
         <div>
@@ -65,7 +60,7 @@ const Tasks = (props) => {
                 onCancel={() => {setVisibleAddModal(false)}}
                 footer={null}
             >
-                <AddModal use={props.users}/>
+                <AddModal/>
             </Modal>
 
         </div>
@@ -75,11 +70,10 @@ const Tasks = (props) => {
 const mapStateToProps = ({ user, modalData }) => {
     return {
         user: user.data,
-        users: user.data,
         modalData
     };
 };
 
-export default connect(mapStateToProps, { notify , setVisibleAddModal  , getUsers})(Tasks);
+export default connect(mapStateToProps, { notify , setVisibleAddModal })(Tasks);
 
 

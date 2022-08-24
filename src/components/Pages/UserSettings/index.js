@@ -24,8 +24,6 @@ import admin from "../../../const/api";
 import { useTranslation } from "react-i18next";
 import {noWhitespace, whiteSpace} from "../../../utils/rules";
 import {routes} from "../../../services/api-routes";
-import * as HttpService from "../../../services/http-service";
-import * as types from "../../../redux/types";
 import Permission from "../../Elements/Permission";
 
 const UserSettings = (props) => {
