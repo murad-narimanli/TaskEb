@@ -187,7 +187,6 @@ const Users = (props) => {
         if (!editing && !IsBad(allUsers , obj)) {
             let id = parseInt(Number(Math.random()*Date.now()))
             obj['id'] = id;
-            obj['firstLogin'] = true;
             await admin
                 .post(mainUrl, obj)
                 .then((res) => {
@@ -305,6 +304,7 @@ const Users = (props) => {
                             onFinish={savePosition}
                         >
                             <Form.Item
+                                validateTrigger="onChange"
                                 label="Name"
                                 name="name"
                                 rules={[whiteSpace('Please input your name!')]}
@@ -317,6 +317,7 @@ const Users = (props) => {
                             </Form.Item>
 
                             <Form.Item
+                                validateTrigger="onChange"
                                 label="Surname"
                                 name="surname"
                                 rules={[whiteSpace('Please input your surname!')]}
@@ -326,6 +327,7 @@ const Users = (props) => {
 
 
                             <Form.Item
+                                validateTrigger="onChange"
                                 label="User Name"
                                 name="username"
                                 rules={[whiteSpace('Please input your username!')]}
@@ -335,15 +337,18 @@ const Users = (props) => {
 
                             <Form.Item
                                 label="Phone"
+                                validateTrigger="onChange"
                                 name="phone"
-                                rules={[noWhitespace('Please input your phone number!')]}
+                                rules={[whiteSpace('Please input your phone number!')]}
                             >
-                                <InputNumber />
+                                <Input type={'number'} />
                             </Form.Item>
+
 
                             <Form.Item
                                 label="Email"
                                 name="email"
+                                validateTrigger="onChange"
                                 rules={[
                                     whiteSpace('Please input your email!'),
                                     {
@@ -359,6 +364,7 @@ const Users = (props) => {
                             <Form.Item
                                 label="Password"
                                 name="password"
+                                validateTrigger="onChange"
                                 rules={
                                     [
                                         whiteSpace('Please input your password!'),

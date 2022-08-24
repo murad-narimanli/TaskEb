@@ -3,5 +3,4 @@ export const routes =  {
     users:'users',
   },
   tasks:'tasks',
-  projects:'projects'
 }

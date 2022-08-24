@@ -26,15 +26,8 @@ const MenuList = (props) => {
         </Link>
       </Menu.Item>
 
-      <Menu.Item key="2">
-        <Link to={`/projects`}>
-          <UnorderedListOutlined />
-          <span>Projects</span>
-        </Link>
-      </Menu.Item>
-
       <Menu.Item key="3">
-        <Link to={`/tasks/board`}>
+        <Link to={`/tasks`}>
           <OrderedListOutlined />
           <span>Tasks</span>
         </Link>

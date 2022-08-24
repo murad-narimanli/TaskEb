@@ -111,6 +111,7 @@ const UserSettings = (props) => {
                 .then((res) => {
                     notify("", true);
                     getData();
+                    window.location.reload();
                     cancelEditing();
                 })
                 .catch((err) => {
@@ -218,6 +219,7 @@ const UserSettings = (props) => {
                             <Form.Item
                                 label="Company Name"
                                 name="companyName"
+                                validateTrigger="onChange"
                                 rules={[
                                     whiteSpace('Please input your company name!')
                                 ]}
@@ -228,6 +230,7 @@ const UserSettings = (props) => {
                             <Form.Item
                                 label="Company Address"
                                 name="address"
+                                validateTrigger="onChange"
                                 rules={[
                                     whiteSpace('Please input your company address!')
                                 ]}
@@ -239,6 +242,7 @@ const UserSettings = (props) => {
                         <Permission type={'admin'} isOk={false}>
                             <Form.Item
                                 label="Name"
+                                validateTrigger="onChange"
                                 name="name"
                                 rules={[whiteSpace('Please input your name!')]}
                             >
@@ -248,6 +252,7 @@ const UserSettings = (props) => {
                             <Form.Item
                                 label="Surname"
                                 name="surname"
+                                validateTrigger="onChange"
                                 rules={[whiteSpace('Please input your surname!')]}
                             >
                                 <Input />
@@ -257,6 +262,7 @@ const UserSettings = (props) => {
                         <Form.Item
                             label="User Name"
                             name="username"
+                            validateTrigger="onChange"
                             rules={[whiteSpace('Please input your username!')]}
                         >
                             <Input />
@@ -265,14 +271,16 @@ const UserSettings = (props) => {
                         <Form.Item
                             label="Phone"
                             name="phone"
-                            rules={[noWhitespace('Please input your phone number!')]}
+                            validateTrigger="onChange"
+                            rules={[whiteSpace('Please input your phone number!')]}
                         >
-                            <InputNumber />
+                            <Input type={'number'} />
                         </Form.Item>
 
                         <Form.Item
                             label="Email"
                             name="email"
+                            validateTrigger="onChange"
                             rules={[
                                 whiteSpace('Please input your email!'),
                                 {
@@ -288,6 +296,7 @@ const UserSettings = (props) => {
                         <Form.Item
                             label="Password"
                             name="password"
+                            validateTrigger="onChange"
                             rules={
                                 [
                                     whiteSpace('Please input your password!'),

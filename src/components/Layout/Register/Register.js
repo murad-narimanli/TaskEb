@@ -10,9 +10,6 @@ import {noWhitespace, whiteSpace} from "../../../utils/rules";
 
 
 const Register = (props) => {
-    const { t } = useTranslation();
-    //eve.holt@reqres.in
-
     useEffect(() => {
         if (props.message.trim().length !== 0) {
             message.warning(props.message);
@@ -26,7 +23,6 @@ const Register = (props) => {
             id,
             ...values,
             isCompany:true,
-            firstLogin:false,
             companyId:id,
             role: {
                 admin: true,
@@ -38,9 +34,6 @@ const Register = (props) => {
         });
     };
 
-    const onFinishFailed = (errorInfo) => {
-        console.log('Failed:', errorInfo);
-    };
 
 
     return (
@@ -66,12 +59,12 @@ const Register = (props) => {
                             }}
 
                             onFinish={onFinish}
-                            onFinishFailed={onFinishFailed}
                             autoComplete="off"
                         >
                             <Form.Item
                                 label="Company Name"
                                 name="companyName"
+                                validateTrigger="onChange"
                                 rules={[
                                     whiteSpace('Please input your company name!')
                                 ]}
@@ -82,6 +75,7 @@ const Register = (props) => {
                             <Form.Item
                                 label="Company Address"
                                 name="address"
+                                validateTrigger="onChange"
                                 rules={[
                                     whiteSpace('Please input your company address!')
                                 ]}
@@ -92,6 +86,7 @@ const Register = (props) => {
                             <Form.Item
                                 label="Username"
                                 name="username"
+                                validateTrigger="onChange"
                                 rules={[whiteSpace('Please input your user name!')]}
                             >
                                 <Input />
@@ -100,14 +95,16 @@ const Register = (props) => {
                             <Form.Item
                                 label="Phone"
                                 name="phone"
-                                rules={[noWhitespace('Please input your phone number!')]}
+                                validateTrigger="onChange"
+                                rules={[whiteSpace('Please input your phone number!')]}
                             >
-                                <InputNumber />
+                                <Input type={'number'} />
                             </Form.Item>
 
                             <Form.Item
                                 label="Email"
                                 name="email"
+                                validateTrigger="onChange"
                                 rules={[
                                     whiteSpace('Please input your email!'),
                                     {
@@ -123,6 +120,7 @@ const Register = (props) => {
                             <Form.Item
                                 label="Password"
                                 name="password"
+                                validateTrigger="onChange"
                                 rules={
                                     [
                                         whiteSpace('Please input your password!'),

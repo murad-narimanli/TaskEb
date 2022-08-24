@@ -18,6 +18,7 @@
     "c3": "^0.7.20",
     "concurrently": "^6.2.2",
     "file-saver": "^2.0.5",
+    "generate-avatar": "^1.4.10",
     "google-maps-react": "^2.0.6",
     "i18next": "^19.7.0",
     "jodit-react": "^1.0.86",
@@ -25,8 +26,10 @@
     "leaflet": "^1.7.1",
     "leaflet-draw": "^1.0.4",
     "lodash-es": "^4.17.15",
+    "lorem-ipsum": "^2.0.8",
     "moment": "^2.29.0",
     "react": "^16.14.0",
+    "react-beautiful-dnd": "^13.1.0",
     "react-dom": "^16.13.1",
     "react-google-recaptcha": "^2.1.0",
     "react-i18next": "^11.7.3",
@@ -43,7 +46,8 @@
     "react-slick": "^0.28.1",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
-    "slick-carousel": "^1.8.1"
+    "slick-carousel": "^1.8.1",
+    "styled-components": "^5.3.5"
   },
   "scripts": {
     "start": "node server.js",
