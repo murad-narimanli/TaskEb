@@ -162,12 +162,11 @@ const UserSettings = (props) => {
             <Col xs={24}>
                 <div className="border animated fadeInDown p-2 mt-0 bg-white">
                     <UnorderedListOutlined className="f-20 mr5-15" />
-                    <span className="f-20 bold">User setting</span>
+                    <span className="f-20 bold">User info</span>
                 </div>
             </Col>
-            <Col lg={12} xs={24}>
+            <Col lg={props.user.role.changeSettings ? 12 : 24} xs={24}>
                <Card>
-
                    <div>
                        <List
                            header={false}
@@ -183,7 +182,7 @@ const UserSettings = (props) => {
                                                     {CamelCaseSplit(user[0])}
                                                 </div>
                                                 <div>
-                                                    {user[0] === 'password' ? '********' : user[1]}
+                                                    {user[1]}
                                                 </div>
                                             </div>
                                         </List.Item>
@@ -192,139 +191,141 @@ const UserSettings = (props) => {
                                }
                            }
                        />
-                       <div>
-                           <Button onClick={()=>{ setEditingObject()  }} type="primary"  size={'large'} className="mt-20 w-100">
-                                <EditOutlined className={'ml-10'}/>
-                                Edit
-                           </Button>
-                       </div>
+                       <Permission type={'changeSettings'}>
+                           <div>
+                               <Button onClick={()=>{ setEditingObject()  }} type="primary"  size={'large'} className="mt-20 w-100">
+                                    <EditOutlined className={'ml-10'}/>
+                                    Edit
+                               </Button>
+                           </div>
+                       </Permission>
                    </div>
                </Card>
             </Col>
-            <Col lg={12} xs={24}>
-                <Card title={false} className={"animated fadeInRight"}>
-                    <Form
-                        form={form}
-                        name="basic"
-                        layout="vertical"
-                        labelCol={{
-                            span: 16,
-                        }}
-                        wrapperCol={{
-                            span: 24,
-                        }}
-                        onFinish={savePosition}
-                    >
-                        <Permission type={'admin'}>
+            <Permission type={'changeSettings'}>
+                <Col lg={12} xs={24}>
+                    <Card title={false} className={"animated fadeInRight"}>
+                        <Form
+                            form={form}
+                            name="basic"
+                            layout="vertical"
+                            labelCol={{
+                                span: 16,
+                            }}
+                            wrapperCol={{
+                                span: 24,
+                            }}
+                            onFinish={savePosition}
+                        >
+                            <Permission type={'admin'}>
+                                <Form.Item
+                                    label="Company Name"
+                                    name="companyName"
+                                    validateTrigger="onChange"
+                                    rules={[
+                                        whiteSpace('Please input your company name!')
+                                    ]}
+                                >
+                                    <Input />
+                                </Form.Item>
+
+                                <Form.Item
+                                    label="Company Address"
+                                    name="address"
+                                    validateTrigger="onChange"
+                                    rules={[
+                                        whiteSpace('Please input your company address!')
+                                    ]}
+                                >
+                                    <Input />
+                                </Form.Item>
+                            </Permission>
+
+                            <Permission type={'admin'} isOk={false}>
+                                <Form.Item
+                                    label="Name"
+                                    validateTrigger="onChange"
+                                    name="name"
+                                    rules={[whiteSpace('Please input your name!')]}
+                                >
+                                    <Input/>
+                                </Form.Item>
+
+                                <Form.Item
+                                    label="Surname"
+                                    name="surname"
+                                    validateTrigger="onChange"
+                                    rules={[whiteSpace('Please input your surname!')]}
+                                >
+                                    <Input />
+                                </Form.Item>
+                            </Permission>
+
                             <Form.Item
-                                label="Company Name"
-                                name="companyName"
+                                label="User Name"
+                                name="username"
+                                validateTrigger="onChange"
+                                rules={[whiteSpace('Please input your username!')]}
+                            >
+                                <Input />
+                            </Form.Item>
+
+                            <Form.Item
+                                label="Phone"
+                                name="phone"
+                                validateTrigger="onChange"
+                                rules={[whiteSpace('Please input your phone number!')]}
+                            >
+                                <Input type={'number'} />
+                            </Form.Item>
+
+                            <Form.Item
+                                label="Email"
+                                name="email"
                                 validateTrigger="onChange"
                                 rules={[
-                                    whiteSpace('Please input your company name!')
+                                    whiteSpace('Please input your email!'),
+                                    {
+                                        type: "email",
+                                        message: "The input is not valid E-mail!",
+                                    },
                                 ]}
                             >
                                 <Input />
                             </Form.Item>
 
-                            <Form.Item
-                                label="Company Address"
-                                name="address"
-                                validateTrigger="onChange"
-                                rules={[
-                                    whiteSpace('Please input your company address!')
-                                ]}
-                            >
-                                <Input />
-                            </Form.Item>
-                        </Permission>
-
-                        <Permission type={'admin'} isOk={false}>
-                            <Form.Item
-                                label="Name"
-                                validateTrigger="onChange"
-                                name="name"
-                                rules={[whiteSpace('Please input your name!')]}
-                            >
-                                <Input/>
-                            </Form.Item>
 
                             <Form.Item
-                                label="Surname"
-                                name="surname"
+                                label="Password"
+                                name="password"
                                 validateTrigger="onChange"
-                                rules={[whiteSpace('Please input your surname!')]}
+                                rules={
+                                    [
+                                        whiteSpace('Please input your password!'),
+                                        { min: 6, message: 'Password must be minimum 6 characters.' },
+                                    ]
+                                }
                             >
-                                <Input />
+                                <Input.Password />
                             </Form.Item>
-                        </Permission>
-
-                        <Form.Item
-                            label="User Name"
-                            name="username"
-                            validateTrigger="onChange"
-                            rules={[whiteSpace('Please input your username!')]}
-                        >
-                            <Input />
-                        </Form.Item>
-
-                        <Form.Item
-                            label="Phone"
-                            name="phone"
-                            validateTrigger="onChange"
-                            rules={[whiteSpace('Please input your phone number!')]}
-                        >
-                            <Input type={'number'} />
-                        </Form.Item>
-
-                        <Form.Item
-                            label="Email"
-                            name="email"
-                            validateTrigger="onChange"
-                            rules={[
-                                whiteSpace('Please input your email!'),
-                                {
-                                    type: "email",
-                                    message: "The input is not valid E-mail!",
-                                },
-                            ]}
-                        >
-                            <Input />
-                        </Form.Item>
-
-
-                        <Form.Item
-                            label="Password"
-                            name="password"
-                            validateTrigger="onChange"
-                            rules={
-                                [
-                                    whiteSpace('Please input your password!'),
-                                    { min: 6, message: 'Password must be minimum 6 characters.' },
-                                ]
-                            }
-                        >
-                            <Input.Password />
-                        </Form.Item>
 
 
 
 
-                        <div className="flex flex-end">
-                            <Form.Item>
-                                <Button  size={'large'} type="primary" className={'mr-10'}  htmlType="submit">
-                                    Save
-                                </Button>
-                            </Form.Item>
-                            <Form.Item>
-                                <Button onClick={cancelEditing} size={'large'}   htmlType="submit">
+                            <div className="flex flex-end">
+                                <Form.Item>
+                                    <Button  size={'large'} type="primary" className={'mr-10'}  htmlType="submit">
+                                        Save
+                                    </Button>
+                                </Form.Item>
+                                <Button onClick={cancelEditing} size={'large'}>
                                     Cancel
                                 </Button>
-                            </Form.Item>
-                        </div>
-                    </Form>
-                </Card>
-            </Col>
+                            </div>
+                        </Form>
+                    </Card>
+                </Col>
+            </Permission>
         </Row>
     );
 };

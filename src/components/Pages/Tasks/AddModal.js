@@ -3,7 +3,7 @@ import {Button, Col, DatePicker, Form, Input, InputNumber, Row, Select} from "an
 import {noWhitespace, whiteSpace} from "../../../utils/rules";
 import {useTranslation} from "react-i18next";
 import {connect} from "react-redux";
-import { notify} from "../../../redux/actions";
+import {notify, setVisibleAddModal , getTasks , getUsers} from "../../../redux/actions";
 import admin from "../../../const/api";
 import moment from "moment";
 import {routes} from "../../../services/api-routes";
@@ -14,18 +14,17 @@ const { Option } = Select;
 const AddModal = (props) => {
     const { t, i18n } = useTranslation();
     const [form] = Form.useForm();
-    const [companies, setCompanies] = useState([]);
     const company = routes.tasks;
     let mainUrl = routes.tasks
-    let { notify, editing, getPostList, setVisibleAddModal, editingData }= props;
+    let { notify, setVisibleAddModal , modalData , users , getUsers} = props;
+    let {editing, editingData } = modalData
 
     useEffect(() => {
-        getCompanies()
+        getUsers({companyId:props.user.companyId});
         if (editing) {
             form.setFieldsValue(
                 {
                     ...editingData,
-                    password: null
                 }
             );
         }
@@ -39,10 +38,10 @@ const AddModal = (props) => {
     const submitForm = (values) =>{
         if(!editing){
             admin.post(mainUrl, values).then(()=>{
-                setVisibleAddModal(false);
+                // setVisibleAddModal(false);
                 form.resetFields();
                 notify("", true);
-                getPostList()
+                getTasks()
             }).catch((err) => {
                 notify(err.response, false);
             } )
@@ -54,10 +53,10 @@ const AddModal = (props) => {
                     id:editing
                 }
             ).then(()=>{
-                setVisibleAddModal(false);
+                // setVisibleAddModal(false);
                 form.resetFields();
                 notify("", true);
-                getPostList()
+                getTasks()
             }).catch((err) => {
                 notify(err.response, false);
             } )
@@ -65,19 +64,7 @@ const AddModal = (props) => {
     }
 
 
-    const getCompanies = async () => {
-        await admin.get(company).then((res) => {
-            setCompanies(
-                res.data.map((p, index) => {
-                    return {
-                        key: index + 1,
-                        ...p,
-                        index: index + 1,
-                    };
-                })
-            );
-        });
-    };
+
 
 
 
@@ -88,10 +75,10 @@ const AddModal = (props) => {
                     <Row gutter={[16, 16]}>
                         <Col lg={24} md={24}>
                             <Form.Item
-                                label={'Name'}
+                                label={'Title'}
                                 className="mb-5"
                                 validateTrigger="onChange"
-                                name={`name`}
+                                name={`title`}
                                 rules={[whiteSpace(t("inputError"))]}
                             >
                                 <Input size="large" />
@@ -99,28 +86,11 @@ const AddModal = (props) => {
                         </Col>
                         <Col lg={24} md={24}>
                             <Form.Item
-                                label={'Surname'}
+                                label={'Description'}
                                 className="mb-5"
                                 validateTrigger="onChange"
-                                name={`surname`}
+                                name={`description`}
                                 rules={[whiteSpace(t("inputError"))]}
-                            >
-                                <Input size="large" />
-                            </Form.Item>
-                        </Col>
-                        <Col lg={24} md={24}>
-                            <Form.Item
-                                label={'Email'}
-                                className="mb-5"
-                                validateTrigger="onChange"
-                                name={`email`}
-                                rules={[whiteSpace(t("inputError")) ,
-                                    {
-                                        required: true,
-                                        type: "email",
-                                        message: "The input is not valid E-mail!",
-                                    },
-                                ]}
                             >
                                 <Input size="large" />
                             </Form.Item>
@@ -129,14 +99,16 @@ const AddModal = (props) => {
                         <Col lg={24} md={24}>
                             <Form.Item
                                 className="mb-5"
-                                label={'Company'}
+                                label={'Assigned users'}
                                 validateTrigger="onChange"
-                                name={`companyId`}
+                                name={`assignedTo`}
                                 rules={[noWhitespace(t("inputError"))]}
                             >
                                 <Select
                                     showSearch
-                                    placeholder={'Company'}
+                                    mode={'multiple'}
+                                    maxTagCount={'responsive'}
+                                    placeholder={'Select users'}
                                     className={'w-100'}
                                     notFoundContent={null}
                                     optionFilterProp="children"
@@ -148,9 +120,9 @@ const AddModal = (props) => {
                                     }
                                 >
                                     {
-                                        companies.map(company => (
-                                            <Option key={company.id} value={company.id}>
-                                                {company.name}
+                                        users.data?.map(user => (
+                                            <Option key={user.id} value={user.id}>
+                                                {user.isCompany ? user.companyName + ' / ' +user.username : user.name + ' '+ user.surname}
                                             </Option>
                                         ))
                                     }
@@ -181,9 +153,9 @@ const AddModal = (props) => {
                         <Button type="primary"  htmlType="submit">
                             {t("save")}
                         </Button>
-                        <Button className="ml-10" onClick={() =>{props.setVisibleAddModal(false) ; form.resetFields()}}>
-                            {t("cancel")}
-                        </Button>
+                        {/*<Button className="ml-10" onClick={() =>{ props.setVisibleAddModal(false) ; form.resetFields()}}>*/}
+                        {/*    {t("cancel")}*/}
+                        {/*</Button>*/}
                     </div>
                 </div>
             </Form>
@@ -193,10 +165,15 @@ const AddModal = (props) => {
 
 
 
-const mapStateToProps = ({  }) => {
-    return {};
+const mapStateToProps = ({ user , users , modalData }) => {
+    return {
+        user: user.data,
+        modalData,
+        users
+    };
 };
 
-export default connect(mapStateToProps, { notify })(AddModal);
+
+export default connect(mapStateToProps, { notify  , setVisibleAddModal , getUsers})(AddModal);
 
 

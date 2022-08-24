@@ -38,7 +38,7 @@ const MenuList = (props) => {
           <Link to={`/users`}>
               <div style={{paddingLeft:'24px'}}>
                 <UsergroupAddOutlined />
-                <span>Users</span>
+                <span>Users </span>
               </div>
           </Link>
         </Menu.Item>
@@ -48,7 +48,7 @@ const MenuList = (props) => {
       <Menu.Item key="5">
         <Link to={`/user-settings`}>
           <SettingOutlined />
-          <span>User Settings</span>
+          <span>User info</span>
         </Link>
       </Menu.Item>
 

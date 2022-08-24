@@ -2,6 +2,8 @@ import React, { useEffect } from "react";
 import styled from "styled-components";
 import { DragDropContext } from "react-beautiful-dnd";
 import DraggableElement from "./DragableElement";
+import {getTasks, notify, setVisibleAddModal} from "../../../redux/actions";
+import {connect} from "react-redux";
 
 const DragDropContextContainer = styled.div`
   padding: 20px;
@@ -14,64 +16,82 @@ const ListGrid = styled.div`
   grid-gap: 8px;
 `;
 
-// fake data generator
-const getItems = (count, prefix) =>
-    Array.from({ length: count }, (v, k) => k).map((k) => {
-        const randomId = Math.floor(Math.random() * 1000);
-        return {
-            id: `item-${randomId}`,
-            prefix,
-            content: `item ${randomId}`
-        };
-    });
 
-const removeFromList = (list, index) => {
-    const result = Array.from(list);
-    const [removed] = result.splice(index, 1);
-    return [removed, result];
-};
+function DragList({user , tasks , getTasks }) {
 
-const addToList = (list, index, element) => {
-    const result = Array.from(list);
-    result.splice(index, 0, element);
-    return result;
-};
+    const removeFromList = (list, index) => {
+        const result = Array.from(list);
+        const [removed] = result.splice(index, 1);
+        return [removed, result];
+    };
 
-const lists = ["todo", "inProgress", "done"];
+    const addToList = (list, index, element) => {
+        const result = Array.from(list);
+        result.splice(index, 0, element);
+        return result;
+    };
 
-const generateLists = () =>
-    lists.reduce(
-        (acc, listKey) => ({ ...acc, [listKey]: getItems(10, listKey) }),
-        {}
-    );
+    const lists = ["todo", "inProgress", "done"];
 
-function DragList() {
-    const [elements, setElements] = React.useState(generateLists());
+    const [elements, setElements] = React.useState({});
+
+
+    const generateLists = (tasks) =>{
+        if(tasks?.data?.length >= 0){
+            let obj = {}
+            lists.forEach(
+                (currentValue) => {
+                    console.log(currentValue)
+                    obj[currentValue] = tasks?.data?.filter((s)=>{
+                        return s['status'] === currentValue
+                    }).map((d) => {
+                        return {
+                            ...d,
+                            ids: `item-${d.id}`,
+                            prefix: d.status,
+                        }
+                    })
+                },
+                obj
+            );
+            setElements(obj)
+            console.log(obj)
+        }
+    }
 
     useEffect(() => {
-        setElements(generateLists());
-    }, []);
+        generateLists(tasks)
+    }, [tasks]);
+
+
+     useEffect(() => {
+         getTasks()
+     }, []);
+
+
 
     const onDragEnd = (result) => {
-        if (!result.destination) {
-            return;
-        }
-        const listCopy = { ...elements };
+       if(user.role.changeStatus){
+           console.log(result);
+           if (!result.destination) {
+               return;
+           }
+           const listCopy = { ...elements };
 
-        const sourceList = listCopy[result.source.droppableId];
-        const [removedElement, newSourceList] = removeFromList(
-            sourceList,
-            result.source.index
-        );
-        listCopy[result.source.droppableId] = newSourceList;
-        const destinationList = listCopy[result.destination.droppableId];
-        listCopy[result.destination.droppableId] = addToList(
-            destinationList,
-            result.destination.index,
-            removedElement
-        );
-
-        setElements(listCopy);
+           const sourceList = listCopy[result.source.droppableId];
+           const [removedElement, newSourceList] = removeFromList(
+               sourceList,
+               result.source.index
+           );
+           listCopy[result.source.droppableId] = newSourceList;
+           const destinationList = listCopy[result.destination.droppableId];
+           listCopy[result.destination.droppableId] = addToList(
+               destinationList,
+               result.destination.index,
+               removedElement
+           );
+           setElements(listCopy);
+       }
     };
 
     return (
@@ -91,4 +111,14 @@ function DragList() {
     );
 }
 
-export default DragList;
+
+const mapStateToProps = ({ tasks, user}) => {
+    return {
+        user: user.data,
+        tasks:tasks?.data
+    };
+};
+
+export default connect(mapStateToProps, {  getTasks })(DragList);
+
+

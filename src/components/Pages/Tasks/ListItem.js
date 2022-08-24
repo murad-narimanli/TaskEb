@@ -1,15 +1,17 @@
 import { Draggable } from "react-beautiful-dnd";
 import { LoremIpsum } from "lorem-ipsum";
-import { generateFromString } from "generate-avatar";
+// import { generateFromString } from "generate-avatar";
 import React, { useMemo } from "react";
 import styled, { css } from "styled-components";
+import {Button, Popconfirm , Tooltip} from "antd";
+import {DeleteFilled, EditFilled} from "@ant-design/icons";
+import {useTranslation} from "react-i18next";
+import Permission from "../../Elements/Permission";
+import {connect} from "react-redux";
+import {getTasks, notify, setVisibleAddModal} from "../../../redux/actions";
+import admin from "../../../const/api";
+import moment from "moment";
 
-const Avatar = styled.img`
-  height: 30px;
-  width: 30px;
-  border: 3px solid white;
-  border-radius: 50%;
-`;
 
 const CardHeader = styled.div`
   font-weight: 500;
@@ -37,13 +39,20 @@ const DragItem = styled.div`
   flex-direction: column;
 `;
 
-const lorem = new LoremIpsum();
 
-const ListItem = ({ item, index }) => {
-    const randomHeader = useMemo(() => lorem.generateWords(5), []);
+const ListItem = ({ item, index , setVisibleAddModal , notify , getTasks }) => {
+    const { t } = useTranslation();
+
+    const deleteTask = (id) => {
+        admin.delete(`tasks/${id}`).then(() => {
+            notify('Deleted' , true)
+            getTasks()
+        })
+    }
+
 
     return (
-        <Draggable draggableId={item.id} index={index}>
+        <Draggable draggableId={item.ids} index={index}>
             {(provided, snapshot) => {
                 return (
                     <DragItem
@@ -52,15 +61,39 @@ const ListItem = ({ item, index }) => {
                         {...provided.draggableProps}
                         {...provided.dragHandleProps}
                     >
-                        <CardHeader>{randomHeader}</CardHeader>
-                        <span>Content</span>
+                        <CardHeader>{item.title}</CardHeader>
+                        <span>{item.description}</span>
+                        <span>DeadLine {moment(item.expireDate).format('DD.MM.YYYY')}</span>
                         <CardFooter>
-                            <span>{item.content}</span>
+                            <span>Task id - {item.id}</span>
                             <Author>
-                                {item.id}
-                                <Avatar
-                                    src={`data:image/svg+xml;utf8,${generateFromString(item.id)}`}
-                                />
+                                <div className="flex flex-end">
+                                    <Permission type={'editTask'}>
+                                        <Tooltip className="ml-5" title={t("edit")} placement="topRight">
+                                            <Button onClick={() =>{setVisibleAddModal(true , item.id , item)}}  className="border-none" type="text" shape="circle">
+                                                <EditFilled />
+                                            </Button>
+                                        </Tooltip>
+                                    </Permission>
+                                    <Permission type={'deleteTask'}>
+                                        <Popconfirm
+                                            placement="right"
+                                            title={t("areYouSure")}
+                                            onConfirm={() => deleteTask(item.id)}
+                                            okText={'Yes'}
+                                            cancelText={'No'}
+                                        >
+                                            <Tooltip className="ml-5" title={'Delete'}>
+                                                <Button className="border-none" type="text" shape="circle">
+                                                    <DeleteFilled />
+                                                </Button>
+                                            </Tooltip>
+                                        </Popconfirm>
+                                    </Permission>
+                                </div>
+                                {/*<Avatar*/}
+                                {/*    src={`data:image/svg+xml;utf8,${generateFromString(item.id)}`}*/}
+                                {/*/>*/}
                             </Author>
                         </CardFooter>
                     </DragItem>
@@ -70,4 +103,13 @@ const ListItem = ({ item, index }) => {
     );
 };
 
-export default ListItem;
+
+
+const mapStateToProps = ({ modalData }) => {
+    return {
+        modalData
+    };
+};
+
+export default connect(mapStateToProps, { notify , setVisibleAddModal , getTasks })(ListItem);
+

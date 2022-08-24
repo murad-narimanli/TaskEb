@@ -1,4 +1,5 @@
 import * as types from '../types'
+import {GET_USERS} from "../types";
 
 const initialUser = {
   isLoggedIn: false,
@@ -6,6 +7,74 @@ const initialUser = {
   message: "",
   notify: true,
 };
+
+const modalData = {
+    modalOpen: false,
+    editing:1,
+    editingData:{}
+}
+
+const taskState = {
+  loading: false,
+  data:[]
+}
+
+const userState = {
+  loading: false,
+  data:[]
+}
+
+
+export function modalReducer(modal= modalData, action) {
+  switch (action.type) {
+    case types.SET_MODAL_ADD:
+      return action.payload
+    case types.CLEAR_MODAL_ADD:
+      return action.payload
+    default:
+      return modalData;
+  }
+}
+
+
+export function usersReducer (users= userState, action) {
+  switch (action.type){
+    case types.GET_USERS_LOADING:
+      return {
+        loading: true,
+        data:[]
+      };
+    case types.GET_USERS:
+      console.log('get is ok')
+      return {
+        loading: false,
+        data:action.payload
+      };
+    default:
+      console.log('bad')
+      return userState;
+  }
+}
+
+
+export function tasksReducer (tasks= taskState, action) {
+  switch (action.type) {
+    case types.GET_TASKS_LOADING:
+      return {
+        loading: true,
+        data:[]
+      };
+    case types.GET_TASKS:
+      return {
+        loading: false,
+        data:action.payload
+      };
+    default:
+      return taskState;
+  }
+}
+
+
 
 export function userReducer(userData = initialUser, action) {
   switch (action.type) {
@@ -21,8 +90,8 @@ export function userReducer(userData = initialUser, action) {
       };
     case types.SET_USER:
       return {
-        data: action.payload.data,
-        isLoggedIn: action.payload.data.token !== null ?  true : false,
+        data: action.payload,
+        isLoggedIn: action.payload.token !== null ?  true : false,
         message: "Successfully logged in",
         notify: !userData.notify,
       };
@@ -33,7 +102,7 @@ export function userReducer(userData = initialUser, action) {
         notify: !userData.notify,
       };
     case types.LOG_OUT:
-      // localStorage.removeItem('access_token')
+      localStorage.removeItem('access_token')
       return {
         notify: userData.notify,
         message: "",

@@ -2,7 +2,7 @@ import { connect } from "react-redux";
 import React from 'react';
 
 const Permission = ({ perms, type   , isOk= true , children }) => {
-    // "admin": ,"editTask": , "addTask": ,"deleteTask": ,"changeStatus":
+    // "admin": ,"editTask": , "addTask": ,"deleteTask": ,"changeStatus":  "changeSettings":
     let showed = perms[type]
     if (isOk){
         return showed ? <>{children}</> : null;

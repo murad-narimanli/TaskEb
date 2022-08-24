@@ -11,7 +11,7 @@ export const getUserData = (data) => async (dispatch) => {
       if(data?.id){
         dispatch({
           type: types.SET_USER_LOGGED_IN,
-          payload: {...data},
+          payload: {...data, token},
         });
         dispatch({ type: types.LOADING_OFF });
       }
@@ -20,7 +20,7 @@ export const getUserData = (data) => async (dispatch) => {
        await admin.get(`${url}/${token}`).then((res) => {
             dispatch({
               type: types.SET_USER_LOGGED_IN,
-              payload: {...res.data},
+              payload: {...res.data , token},
             });
           })
           .catch((err) => {
@@ -121,13 +121,94 @@ export const registerUser  = (data) => async (dispatch) => {
       })
     }
 
-
   })
 };
 
 export const toggleLoading = (payload) => ({
   type: payload ? types.LOADING_ON : types.LOADING_OFF,
 });
+
+
+
+export const getUsers = (params) => async (dispatch) => {
+  // dispatch({
+  //   type: types.GET_USERS_LOADING,
+  // });
+  await admin
+      .get(`users` , {params})
+      .then((res) => {
+          console.log(res.data)
+        dispatch({
+          type: types.GET_USERS,
+          payload: res.data
+        });
+      })
+      .catch(() => {
+        dispatch({
+          type: types.GET_USERS,
+          payload: {
+            data: [],
+            loading:false
+          }
+        });
+      })
+};
+
+
+
+export const getTasks = (params) => async (dispatch) => {
+  dispatch({
+    type: types.GET_TASKS_LOADING,
+  });
+  await admin
+      .get(`tasks` , {params})
+      .then((res) => {
+        dispatch({
+          type: types.GET_TASKS,
+          payload: {
+            data: res.data,
+            loading:false
+          }
+        });
+      }).catch(() => {
+          dispatch({
+            type: types.GET_TASKS,
+            payload: {
+              data: [],
+              loading:false
+            }
+         });
+     })
+};
+
+
+
+export const setVisibleAddModal = (modalOpen, editing=null , editingData = {}) => async (dispatch) => {
+    console.log('setVisibleAddModal')
+    if (modalOpen){
+        await  dispatch({
+        type: types.SET_MODAL_ADD,
+        payload: {
+          modalOpen,
+          editing,
+          editingData
+        }
+      });
+    }
+    else{
+      dispatch({
+        type: types.CLEAR_MODAL_ADD,
+          payload: {
+              modalOpen,
+              editing:null,
+              editingData:{}
+        }
+      });
+    }
+};
+
+
+
 
 export const logOut = () => ({
   type: types.LOG_OUT,

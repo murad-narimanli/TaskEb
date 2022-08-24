@@ -2,6 +2,8 @@ import { Droppable } from "react-beautiful-dnd";
 import ListItem from "./ListItem";
 import React from "react";
 import styled from "styled-components";
+import {connect} from "react-redux";
+import {notify} from "../../../redux/actions";
 
 const ColumnHeader = styled.div`
   text-transform: uppercase;
@@ -14,13 +16,13 @@ const DroppableStyles = styled.div`
   background: #f0f2f5;
 `;
 
-const DraggableElement = ({ prefix, elements }) => (
+const DraggableElement = ({ prefix, elements , user}) => (
     <DroppableStyles>
         <ColumnHeader>{prefix}</ColumnHeader>
-        <Droppable droppableId={`${prefix}`}>
+        <Droppable  isDropDisabled={!user.role.changeStatus} droppableId={`${prefix}`}>
             {(provided) => (
                 <div {...provided.droppableProps} ref={provided.innerRef}>
-                    {elements.map((item, index) => (
+                    {elements?.map((item, index) => (
                         <ListItem key={item.id} item={item} index={index} />
                     ))}
                     {provided.placeholder}
@@ -30,4 +32,11 @@ const DraggableElement = ({ prefix, elements }) => (
     </DroppableStyles>
 );
 
-export default DraggableElement;
+
+const mapStateToProps = ({ user }) => {
+    return {
+        user: user.data,
+    };
+};
+
+export default connect(mapStateToProps, { notify })(DraggableElement);

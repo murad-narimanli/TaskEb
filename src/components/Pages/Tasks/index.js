@@ -9,26 +9,27 @@ import {
 import {
     UnorderedListOutlined,
 } from "@ant-design/icons";
-import { notify } from "../../../redux/actions";
+import {getUsers, notify, setVisibleAddModal} from "../../../redux/actions";
 import { connect } from "react-redux";
 import { useTranslation } from "react-i18next";
 import DragList from "./DragList";
 import Modal from "antd/es/modal/Modal";
 import AddModal from "./AddModal";
+import admin from "../../../const/api";
+import Permission from "../../Elements/Permission";
 
 const Tasks = (props) => {
     const { t } = useTranslation();
-    const [spin, setSpin] = useState(false);
-    const [addModal , setVisibleAddModal] =  useState(false);
-    const [editing , setEditing] = useState( undefined)
-
-    useEffect(() => {
-    }, [t]);
+    const { setVisibleAddModal , getUsers } = props
 
     const showModal = () => {
-      setVisibleAddModal(true)
+      setVisibleAddModal(true , null, {})
     }
 
+    useEffect(() =>{
+        getUsers({companyId:props.user.companyId});
+        console.log(props.users)
+    } ,[props.users])
 
     return(
         <div>
@@ -40,45 +41,45 @@ const Tasks = (props) => {
                             <span className="f-20 bold">Tasks</span>
                         </div>
                         <div>
-                            <Button onClick={showModal} type={'primary'}>
-                                Add Task
-                            </Button>
+                            <Permission type={'addTask'}>
+                                <Button onClick={showModal} type={'primary'}>
+                                    Add Task
+                                </Button>
+                            </Permission>
                         </div>
                     </div>
                 </Col>
                 <Col lg={24} xs={24}>
-                    <Card loading={spin}>
-                        <DragList/>
+                    <Card className={'animated fadeIn'}>
+                        <DragList  />
                     </Card>
                 </Col>
             </Row>
+
             <Modal
-                title={editing ? 'Edit' : 'Add'}
+                title={props.modalData.editing ? 'Edit' : 'Add' + ' ' + 'task'}
                 centered
-                visible={addModal}
+                visible={props.modalData.modalOpen}
                 className="padModal"
                 onOk={() => setVisibleAddModal(false)}
-                onCancel={() => {setVisibleAddModal(false) ; setEditing(undefined)}}
+                onCancel={() => {setVisibleAddModal(false)}}
                 footer={null}
             >
-                <AddModal
-                    editing={editing}
-                    // getPostList={getPostList}
-                    // setVisibleAddModal={setVisibleAddModal}
-                    // editingData={postlist?.find(s => s.id === editing)}
-                />
+                <AddModal use={props.users}/>
             </Modal>
 
         </div>
     );
 };
 
-const mapStateToProps = ({ user }) => {
+const mapStateToProps = ({ user, modalData }) => {
     return {
         user: user.data,
+        users: user.data,
+        modalData
     };
 };
 
-export default connect(mapStateToProps, { notify })(Tasks);
+export default connect(mapStateToProps, { notify , setVisibleAddModal  , getUsers})(Tasks);
 
 

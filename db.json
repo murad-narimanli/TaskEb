@@ -2,9 +2,9 @@
   "users": [
     {
       "id": 750629664128,
-      "companyName": "tes",
-      "address": "test",
-      "username": "test",
+      "companyName": "Murad MMC",
+      "address": "Baku Azerbaijan Badamdar av 3 h33",
+      "username": "Muradn",
       "phone": "994556230599",
       "email": "m.nerimanli@gmail.com",
       "password": "Murad2020!",
@@ -16,7 +16,8 @@
         "editTask": true,
         "addTask": true,
         "deleteTask": true,
-        "changeStatus": true
+        "changeStatus": true,
+        "changeSettings": true
       }
     },
     {
@@ -31,46 +32,90 @@
         "addTask": true,
         "deleteTask": true,
         "changeStatus": true,
+        "changeSettings": true,
         "admin": false
       },
       "isCompany": false,
       "companyId": 750629664128,
-      "companyName": "tes",
-      "id": 1606263393511,
-      "firstLogin": true
+      "companyName": "Murad MMC",
+      "id": 1606263393511
     },
     {
-      "name": "rtwyue",
-      "surname": "iyetiwyti",
-      "username": "iytsiytsiyt",
-      "phone": "3343434",
-      "email": "masda@mail.sd",
-      "password": "rtwyue2022",
+      "id": 655629836195,
+      "companyName": "Rufet mmc",
+      "address": "Baku Azerbaijan Badamdar av 3 h33",
+      "username": "rufatq",
+      "phone": "5562162162",
+      "email": "r.qasimov@gmail.com",
+      "password": "Rufat2020!",
+      "isCompany": true,
+      "companyId": 655629836195,
+      "role": {
+        "admin": true,
+        "editTask": true,
+        "addTask": true,
+        "deleteTask": true,
+        "changeStatus": true,
+        "changeSettings": true
+      }
+    },
+    {
+      "name": "test",
+      "surname": "testrufet",
+      "username": "testRuf",
+      "phone": "3834823847243",
+      "email": "testruf@gmail.com",
+      "password": "test2022",
+      "role": {
+        "editTask": true,
+        "addTask": true,
+        "deleteTask": true,
+        "admin": false,
+        "changeSettings": true
+      },
+      "isCompany": false,
+      "companyId": 655629836195,
+      "companyName": "Rufet mmc",
+      "id": 167655537183
+    },
+    {
+      "name": "Murad Narimanli",
+      "surname": "test",
+      "username": "test",
+      "phone": "65432",
+      "email": "test2@gmail.com",
+      "password": "Murad2020!",
       "role": {
         "editTask": true,
         "addTask": true,
         "deleteTask": true,
         "changeStatus": true,
+        "changeSettings": true,
         "admin": false
       },
       "isCompany": false,
       "companyId": 750629664128,
-      "companyName": "tes",
-      "id": 1235733493105
+      "companyName": "Murad MMC",
+      "id": 687095698863
     }
   ],
   "tasks": [
     {
-      "id": "1",
+      "id": 1232323,
       "title": "Admin",
       "description": "Administrator",
-      "status": "inList",
-      "companyId": "1",
-      "order": [0,0],
+      "status": "todo",
+      "companyId": 750629664128,
+      "order": [
+        0,
+        1
+      ],
       "createdById": "1",
       "expireDate": "2015-01-01T00:00:00000029",
-      "assigned": [
-        1, 2, 3
+      "assignedTo": [
+        1,
+        2,
+        3
       ]
     }
   ]

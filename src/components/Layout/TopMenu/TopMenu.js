@@ -40,7 +40,7 @@ const TopMenu = (props) => {
           <Link to={'/user-settings'}>
             <Button>
               <SettingOutlined />
-              <span>{t("settings")}</span>
+              <span>User info</span>
             </Button>
           </Link>
           <Button onClick={logOut}>

@@ -29,7 +29,8 @@ const Register = (props) => {
                 editTask : true,
                 addTask : true,
                 deleteTask : true,
-                changeStatus : true
+                changeStatus : true,
+                changeSettings:true
             }
         });
     };

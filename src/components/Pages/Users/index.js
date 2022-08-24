@@ -46,7 +46,8 @@ const Users = (props) => {
         "editTask",
         "addTask",
         "deleteTask",
-        "changeStatus"
+        "changeStatus",
+        "changeSettings"
     ]
 
     // props
@@ -411,7 +412,7 @@ const Users = (props) => {
                                     </Button>
                                 </Form.Item>
                                 <Form.Item>
-                                    <Button onClick={cancelEditing} size={'large'}   htmlType="submit">
+                                    <Button onClick={cancelEditing} size={'large'}  >
                                         Cancel
                                     </Button>
                                 </Form.Item>
