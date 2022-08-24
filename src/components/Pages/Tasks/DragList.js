@@ -60,11 +60,8 @@ function DragList({user , tasks , getTasks , loading}) {
                 },
                 obj
             );
-            setTimeout(()=>{
-                setSpin(false)
-                setElements(obj)
-            } , 200)
-
+            setSpin(false)
+            setElements(obj)
         }
     }
 
@@ -96,22 +93,20 @@ function DragList({user , tasks , getTasks , loading}) {
                setSpin(true)
                admin.put(`tasks/${removedElement.id}` , {
                    ...removedElement,
-                   status:result.destination.droppableId
+                   status:result.destination.droppableId,
+                   prefix:result.destination.droppableId
                }).then(() =>{
-                   listCopy[result.source.droppableId] = newSourceList;
-                   const destinationList = listCopy[result.destination.droppableId];
-                   listCopy[result.destination.droppableId] = addToList(
-                       destinationList,
-                       result.destination.index,
-                       removedElement
-                   );
-                   setElements(listCopy);
-               }).finally(() => {
-                   setTimeout(() =>{
-                       setSpin(false)
-                   } , 200)
+                   getTasks()
                })
            }
+           listCopy[result.source.droppableId] = newSourceList;
+           const destinationList = listCopy[result.destination.droppableId];
+           listCopy[result.destination.droppableId] = addToList(
+               destinationList,
+               result.destination.index,
+               removedElement
+           );
+           setElements(listCopy);
        }
     };
 

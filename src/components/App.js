@@ -93,7 +93,7 @@ class App extends React.Component {
         message: curr.isHappy
           ? this.props.t("successMessage")
           : this.props.t("errMessage"),
-        description: desc.length ? desc : null,
+        description: desc?.length ? desc : null,
         icon: curr.isHappy ? <CheckOutlined /> : <WarningOutlined />,
       });
     }

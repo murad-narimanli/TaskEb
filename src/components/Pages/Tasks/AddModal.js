@@ -61,6 +61,7 @@ const AddModal = (props) => {
                 id,
                 ...values,
                 status:'todo',
+                prefix:'todo',
                 companyId:props.user.companyId,
                 createdBy:props.user.id,
                 color: `${randomRgbColor()}`
@@ -78,16 +79,15 @@ const AddModal = (props) => {
             let objPut = {
                 ...editingData,
                 ...values,
+                status : editingData.status,
+                prefix : editingData.prefix,
             }
             admin.put(
-                'tasks'+`/` + editing, {
-                    ...objPut
-                }
-            ).then(()=>{
+                'tasks'+`/` + editing, objPut).then(()=>{
+                getTasks()
                 setVisibleAddModal(false);
                 form.resetFields();
                 notify("", true);
-                getTasks()
             }).catch((err) => {
                 notify(err.response, false);
             } )
@@ -201,7 +201,7 @@ const AddModal = (props) => {
 
 
 
-const mapStateToProps = ({ user , modalData , tasks }) => {
+const mapStateToProps = ({ user , modalData  }) => {
     return {
         user: user.data,
         modalData,
