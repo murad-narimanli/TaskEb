@@ -51,6 +51,7 @@
   },
   "scripts": {
     "start": "node server.js",
+    "install": "npm i --legacy-peer-deps",
     "dev": "concurrently --kill-others \"react-scripts start\" \"json-server -w db.json -p 8000\"",
     "build": "react-scripts build",
     "test": "react-scripts test",

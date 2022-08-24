@@ -14,7 +14,7 @@ admin.interceptors.request.use(
       : null;
     config.headers["accept-language"] = localStorage.getItem("locale")
       ? localStorage.getItem("locale")
-      : "az";
+      : "en";
     return config;
   },
   (error) => {
@@ -32,7 +32,7 @@ admin.interceptors.response.use(
                 localStorage.removeItem("access_token");
                 window.location.reload();
             } else {
-                console.log('xeta')
+                console.log('problem!')
             }
             return Promise.reject(error);
         }

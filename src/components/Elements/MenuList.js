@@ -17,16 +17,9 @@ const MenuList = (props) => {
       mode="inline"
       theme="light"
       className="menu-ul"
-      defaultSelectedKeys={'3'}
+      defaultSelectedKeys={'1'}
     >
-      {/*<Menu.Item key="/">*/}
-      {/*  <Link to={`/`}>*/}
-      {/*    <AreaChartOutlined />*/}
-      {/*    <span>Dashboard</span>*/}
-      {/*  </Link>*/}
-      {/*</Menu.Item>*/}
-
-      <Menu.Item key="3">
+      <Menu.Item key="1">
         <Link to={`/tasks`}>
           <OrderedListOutlined />
           <span>Tasks</span>
@@ -34,7 +27,7 @@ const MenuList = (props) => {
       </Menu.Item>
 
       <Permission type={'admin'}>
-        <Menu.Item key="4">
+        <Menu.Item key="2">
           <Link to={`/users`}>
               <div style={{paddingLeft: !props.collapsed ? '24px' : '0'}}>
                 <UsergroupAddOutlined />
@@ -45,7 +38,7 @@ const MenuList = (props) => {
       </Permission>
 
 
-      <Menu.Item key="5">
+      <Menu.Item key="3">
         <Link to={`/user-settings`}>
           <SettingOutlined />
           <span>User Settings</span>
