@@ -1,6 +1,5 @@
 import React from 'react';
 import {Redirect, Route, Switch} from "react-router-dom";
-import {connect} from "react-redux";
 import Dashboard from "../../Pages/Dashboard";
 import Users from "../../Pages/Users";
 import UserSettings from "../../Pages/UserSettings";
@@ -12,8 +11,9 @@ function Routing(props) {
 
     return (
         <Switch>
-            <Route exact path={`/`} component={Dashboard} />
+            {/*<Route exact path={`/`} component={Dashboard} />*/}
             <Route exact path={`/user-settings`} component={UserSettings} />
+            <Route exact path={`/`} component={Tasks} />
             <Route exact path={`/tasks`} component={Tasks} />
             <Permission type={'admin'}>
                 <Route exact path={`/users`} component={Users} />

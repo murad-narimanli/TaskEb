@@ -39,12 +39,7 @@ function DragList({user , tasks , getTasks , loading}) {
 
     const [elements, setElements] = React.useState({});
 
-    const randomRgbColor = () => {
-        const r = Math.floor(Math.random() * 256);
-        const g = Math.floor(Math.random() * 256);
-        const b = Math.floor(Math.random() * 256);
-        return `rgb(${r}, ${g}, ${b})`;
-    };
+
 
     const generateLists = (tasks) =>{
         if(tasks?.data?.length >= 0){
@@ -59,8 +54,7 @@ function DragList({user , tasks , getTasks , loading}) {
                         return {
                             ...d,
                             ids: `item-${d.id}`,
-                            prefix: d.status,
-                            color: `${randomRgbColor()}`
+                            prefix: d.status
                         }
                     })
                 },
@@ -83,7 +77,6 @@ function DragList({user , tasks , getTasks , loading}) {
          getTasks()
          getUsers()
      }, []);
-
 
 
     const onDragEnd = async (result) => {

@@ -20,6 +20,13 @@ const AddModal = (props) => {
     let { notify, setVisibleAddModal , modalData , getTasks} = props;
     let {editing, editingData } = modalData
 
+    const randomRgbColor = () => {
+        const r = Math.floor(Math.random() * 256);
+        const g = Math.floor(Math.random() * 256);
+        const b = Math.floor(Math.random() * 256);
+        return `rgb(${r}, ${g}, ${b})`;
+    };
+
     useEffect(() => {
         getUsers()
 
@@ -56,6 +63,7 @@ const AddModal = (props) => {
                 status:'todo',
                 companyId:props.user.companyId,
                 createdBy:props.user.id,
+                color: `${randomRgbColor()}`
             }
             admin.post('tasks', objPost).then(()=>{
                 setVisibleAddModal(false);
