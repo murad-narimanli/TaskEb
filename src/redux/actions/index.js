@@ -61,7 +61,7 @@ export const logInUser = (email, password) => async (dispatch) => {
         let user = res.data[0]
         localStorage.setItem("access_token", user.id);
         dispatch(getUserData(user));
-        history.push("/");
+        history.push("/tasks");
       })
       .catch((error) => {
         dispatch({
