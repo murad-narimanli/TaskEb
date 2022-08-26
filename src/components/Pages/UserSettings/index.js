@@ -25,6 +25,7 @@ import { useTranslation } from "react-i18next";
 import {noWhitespace, whiteSpace} from "../../../utils/rules";
 import {routes} from "../../../services/api-routes";
 import Permission from "../../Elements/Permission";
+import history from "../../../const/history";
 
 const UserSettings = (props) => {
     const mainUrl = routes.profile.users
@@ -109,6 +110,7 @@ const UserSettings = (props) => {
                 .then((res) => {
                     notify("", true);
                     getData();
+                    history.push('/')
                     window.location.reload();
                     cancelEditing();
                 })

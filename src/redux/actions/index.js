@@ -8,6 +8,7 @@ export const getUserData = (data) => async (dispatch) => {
   dispatch({ type: types.LOADING_ON });
   let token = localStorage.getItem("access_token")
   if (token){
+      history.push("/");
       if(data?.id){
         dispatch({
           type: types.SET_USER_LOGGED_IN,
@@ -16,7 +17,6 @@ export const getUserData = (data) => async (dispatch) => {
         dispatch({ type: types.LOADING_OFF });
       }
       else{
-        console.log('test')
        await admin.get(`${url}/${token}`).then((res) => {
             dispatch({
               type: types.SET_USER_LOGGED_IN,
@@ -60,8 +60,7 @@ export const logInUser = (email, password) => async (dispatch) => {
         console.log(res)
         let user = res.data[0]
         localStorage.setItem("access_token", user.id);
-        dispatch(getUserData(user));
-        history.push("/tasks");
+          dispatch(getUserData(user));
       })
       .catch((error) => {
         dispatch({
