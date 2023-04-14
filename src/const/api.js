@@ -2,7 +2,7 @@ import axios from "axios";
 
 
 export const admin = axios.create({
-  baseURL:  `https://managmentsys-murad.herokuapp.com/api`,
+  baseURL:  `http://localhost:8000`,
   headers: { "Content-Type": "application/json" },
 });
 
